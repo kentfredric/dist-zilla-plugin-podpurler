@@ -61,8 +61,19 @@ sub munge_file {
         $str .= "$event->{content}\n";
         next EVENT;
       }
+      $str .= "=$event->{command}";
 
-      $str .= "=$event->{command} $event->{content}\n";
+      if( $event->{content} eq "\n" ){
+          $str .= "\n\n";
+          next EVENT;
+      }
+
+      if( length ( $event->{content} ) < 1 ){
+          $str .= "\n";
+          next EVENT;
+      }
+
+      $str .= " $event->{content}\n";
     }
 
     return $str;
